@@ -16,6 +16,7 @@ def data_entry():
     c.close()
     conn.close() 
 
+#creates a new entry in drawingideas.db, which contains a (idea, tag, value) ordered triple
 def dynamic_data_entry():
     for line in f:
         idea = str(line.strip())

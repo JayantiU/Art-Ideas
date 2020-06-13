@@ -84,6 +84,7 @@ def reply():
             print('found you')
             # formatting the tweet 
             theIdea = art_ideas()
+            #first letter
             first = theIdea[0]
             # vowel formatting
             if first=="a" or first=="e" or first=="i" or first=="o" or first=="u":
