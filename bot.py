@@ -1,7 +1,10 @@
 """
-This program is for building a twitter bot . Which can retweet and fav the tweets and suggest you something pretty awesome things to draw or paint. Which will inturn make you creative ;).
-HAPPY DRAWING 
+This program is for building a twitter bot 
+which can retweet and fav the tweets and suggest you something pretty awesome things to draw or paint
+which will in turn make you creative ;).
+HAPPY DRAWING!!!
 """
+
 # Import the necessary modules... Don't forget to import our sweet tweepy ;)
 import tweepy
 import time
@@ -13,20 +16,26 @@ import os
 from os import environ
 
 # For logging informations
-# On heroku, logging is done by writing to stdout or stderr--
-# so print("logging info") will be sufficient to log
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
 print('this is the twitter bot')
 
-CONSUMER_KEY = environ['CONSUMER_KEY']
-CONSUMER_SECRET = environ['CONSUMER_SECRET']
-ACCESS_KEY = environ['ACCESS_KEY']
-ACCESS_SECRET = environ['ACCESS_SECRET']
+#this is necessary to prevent other people from stealing our twitter keys
+#since everything is public on github, using the environ package will solve this problem
+#CONSUMER_KEY = environ['CONSUMER_KEY']
+#CONSUMER_SECRET = environ['CONSUMER_SECRET']
+#ACCESS_KEY = environ['ACCESS_KEY']
+#ACCESS_SECRET = environ['ACCESS_SECRET']
+
+ACCESS_KEY = "1271545311866077185-hePGq6nVkrbajpdHTG6DrnUIBPDPHH"
+ACCESS_SECRET = "HUtEmjUYq56Aa3KU33FD35yuq3I6eU5MClvdTtvgnRN0P"
+CONSUMER_KEY = "VvnrS1oav7i0bXiPjoPJBeRFs"
+CONSUMER_SECRET = "frKD00co3t1LgDfHMGNvgMIR5bQehMLfYhH8UNlZY8WZiNB27i"
 
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
+
 # use this object to communicate with twitter
 api = tweepy.API(auth, wait_on_rate_limit=True,
                  wait_on_rate_limit_notify=True)
@@ -48,6 +57,7 @@ def art_ideas(): #replace with google cloud potentially?
     for row in data:
         idea = row[0]
     return idea
+
 
 def inspo_ideas(folder): #to retrieve images stored in folder (for testing- there are 3 images in folder)
     images= glob.glob(folder + '*')
@@ -74,7 +84,7 @@ def store_recent_id(recent_id, filename):
 
 
 def reply():
-    print('checking')
+    print('\nchecking')
     recent_id = retrieve_recent_id(file_name)
     mentions = api.mentions_timeline(recent_id, tweetmode='extended')
 
@@ -84,7 +94,8 @@ def reply():
         store_recent_id(recent_id, file_name)
         if'#whatshouldidraw' in mention.text.lower() or '#artideas' in mention.text.lower():
             print('found you')
-            # formatting the tweet 
+
+            ### formatting the tweet ###
             theIdea = art_ideas()
             #first letter
             first = theIdea[0]
@@ -96,7 +107,9 @@ def reply():
             # s formatting
             if theIdea[-1]=="s":
                 text = " Here, you can draw "
+            
             api.update_status('@' + mention.user.screen_name + text + theIdea , mention.id)
+
             # Like the tweet where it is mentioned(if not faved)
             if not mention.favorited:
                 logger.info(f'Liking the tweet of {mention.user.name}')
@@ -119,7 +132,7 @@ def reply():
                 logger.error("I don't know why this error pops up!!", exc_info=True)    
 
 def reply_image():
-    print('checking')
+    print('\nchecking for images')
     recent_id = retrieve_recent_id(file_name)
     mentions = api.mentions_timeline(recent_id, tweetmode='extended')
 
@@ -127,10 +140,11 @@ def reply_image():
         print(str(mention.id) + '---' + mention.text)
         recent_id = mention.id
         store_recent_id(recent_id, file_name)
-        if '#inspiration?' in mention.text.lower():
+        if '#inspiration' in mention.text.lower():
             print('found you')
-            api.update_status('@' + mention.user.screen_name + 'Here you go, ', mention.id)
-            api.update_with_media(inspo_pics(bot/folder), mention.id) #change source of folder
+
+            api.update_status('@' + mention.user.screen_name + ' Here you go, ', mention.id)
+            api.update_with_media("inspo_pics\\pic.jpg", mention.id) #change source of folder
 
 
 def follow_followers(api):
@@ -148,7 +162,7 @@ while True:
     reply()
     reply_image()
     # A quick nap.... Don't wake me up for 10 sec atleast !|
-    time.sleep(20)  # 20 sec delay
+    time.sleep(60)  #60 sec delay
 
 follow_followers(api)
 c.close()
