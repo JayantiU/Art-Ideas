@@ -1,7 +1,8 @@
 import tweepy
 import time
-from random import choice
+from random import choice, randint
 import sqlite3
+import glob
 
 print('this is the twitter bot')
 
@@ -27,6 +28,11 @@ def art_ideas(): #replace with google cloud potentially?
         idea = row[0]
     return idea
 
+def inspo_ideas(folder): #to retrieve images stored in folder (for testing- there are 3 images in folder)
+    images= glob.glob(folder + '*')
+    image_open = images[randint(0,len(images))-1]
+    return image_open    
+    
 def retrieve_recent_id(filename):
     f_read = open(filename, 'r')
     recent_id1= int(f_read.read().strip())
@@ -63,9 +69,23 @@ def reply():
                 text = " Here, you can draw "
             api.update_status('@' + mention.user.screen_name + text + theIdea , mention.id)
 
+def reply_image():
+    print('checking')
+    recent_id = retrieve_recent_id(file_name)
+    mentions = api.mentions_timeline(recent_id, tweetmode='extended')
 
+    for mention in reversed(mentions):
+        print(str(mention.id) + '---' + mention.text)
+        recent_id = mention.id
+        store_recent_id(recent_id, file_name)
+        if '#inspiration?' in mention.text.lower():
+            print('found you')
+            api.update_status('@' + mention.user.screen_name + 'Here you go, ', mention.id)
+            api.update_with_media(inspo_pics(bot\folder), mention.id) #change source of folder 
+            
 while True:
     reply()
+    reply_image()
     time.sleep(2) #10 sec delay
 
 c.close()
