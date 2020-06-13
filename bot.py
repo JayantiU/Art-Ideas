@@ -11,6 +11,8 @@ import sqlite3
 import glob
 
 # For logging informations
+# On heroku, logging is done by writing to stdout or stderr--
+# so print("logging info") will be sufficient to log
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
