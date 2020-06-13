@@ -9,6 +9,8 @@ import logging
 from random import choice, randint
 import sqlite3
 import glob
+import os
+from os import environ
 
 # For logging informations
 # On heroku, logging is done by writing to stdout or stderr--
@@ -17,6 +19,11 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
 print('this is the twitter bot')
+
+CONSUMER_KEY = enciron['CONSUMER_KEY']
+CONSUMER_SECRET = enciron['CONSUMER_SECRET']
+ACCESS_KEY = enciron['ACCESS_KEY']
+ACCESS_SECRET = enciron['ACCESS_SECRET']
 
 CONSUMER_KEY = 'VvnrS1oav7i0bXiPjoPJBeRFs'
 CONSUMER_SECRET = 'frKD00co3t1LgDfHMGNvgMIR5bQehMLfYhH8UNlZY8WZiNB27i'
@@ -146,7 +153,7 @@ while True:
     reply()
     reply_image()
     # A quick nap.... Don't wake me up for 10 sec atleast !|
-    time.sleep(2)  # 10 sec delay
+    time.sleep(20)  # 20 sec delay
 
 follow_followers(api)
 c.close()
