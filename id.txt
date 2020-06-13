@@ -1,0 +1,10 @@
+Storing ID of all 6 tweets for testing (refer to last two digits to identify)
+
+tweet 6: 1271580479456784389 *(0th                         )
+tweet 5: 1271577021349576713  (1st                         )
+tweet 4: 1271576972381085698  (2nd                         )
+tweet 3 :1271576461829443587  (3rd                         )
+tweet 2: 1271576357475160067 *(4th                         )
+tweet 1: 1271576241003466753  (5th element in mentions list)
+
+---this is why mentions is revered in the for loop---
