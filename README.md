@@ -6,11 +6,9 @@ Tag @artideas10 in your next tweet with the list of keywords below included in y
 
 The following pharses will enable the Twitter bot:
   [#help]
- -#drawings
- -#musicals
- -#songs
- -#movies
- -#books
+  [#drawings]
+
+
 
 
 # Tools Used
