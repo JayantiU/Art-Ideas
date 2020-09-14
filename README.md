@@ -1,5 +1,6 @@
 # Art-Ideas
 A twitter bot that will tell you what to draw/listen/watch/read next.
+Learn more about it @ https://devpost.com/software/art-ideas
 
 # How to Use
 Tag @artideas10 in your next tweet with the list of keywords below included in your tweet and our bot will reply with corresponding recomendations for you to check out!
